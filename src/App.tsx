@@ -1,8 +1,12 @@
-import React from "react"
-import { createTheme, ThemeProvider } from "@mui/materials/styles"
-import { Home } from "@reach/router"
+import React, { FC } from "react"
+import { createTheme, ThemeProvider } from "@mui/material/styles"
+import { Router } from "@reach/router"
 
-const Home = () => {
+interface HomeProps {
+    path?: string
+}
+
+const Home: FC<HomeProps> = () => {
     return (
         <div>Home</div>
     )
