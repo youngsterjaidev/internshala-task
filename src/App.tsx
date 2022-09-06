@@ -223,7 +223,9 @@ const Page: FC<{ path: string }> = () => {
         <Grid sx={{ padding: "0.5rem" }} container direction="row" spacing={4} justifyContent="center">
             {blogs.map(blog => (
                 <Grid item sx={{ flexShrink: 0, flexGrow: 1 }}>
+                    {/* @ts-ignore */}
                     <Link style={{ textDecoration: "none" }} to={`/blog/${blog.id}`}>
+                        {/* @ts-ignore */}
                         <BlogCard {...blog} />
                     </Link>
                 </Grid>
