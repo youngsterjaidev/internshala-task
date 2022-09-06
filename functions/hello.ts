@@ -27,7 +27,7 @@ const blogMem = [
 ]
 
 const filterElement = (key: string | number, value: string) => {
-    return blogMem.filter(item => item[key] === value)
+    return blogMem.filter(item => item[key] === +value)
 }
 
 
@@ -48,7 +48,9 @@ const handler: Handler = async (event, context) => {
         }
 
         if (blogId) {
+            console.log(blogId)
             let result = filterElement("id", blogId)
+            console.log(result)
             return {
                 statusCode: 200,
                 body: JSON.stringify(result)

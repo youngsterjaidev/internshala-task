@@ -1,9 +1,12 @@
 import React, { FC, useState, useEffect } from "react"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
-import { Link, Router, useLocation } from "@reach/router"
+import { Link, Router, useLocation, useParams } from "@reach/router"
 import { Container } from "@mui/system"
 import { CardHeader, Drawer, Grid, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material"
 import axios from "axios"
+import Box from '@mui/material/Box';
+import SpeedDial from '@mui/material/SpeedDial';
+import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -62,16 +65,26 @@ const blogService = {
             console.log("Error occured while adding the blog addBlog fn : ", e)
         }
     },
-    findBlog: async (blogId: number | null, blogType: string) => {
+    findBlog: async (blogId: number | null, blogType: string | null) => {
         try {
-            const res = await axios({
-                url: "/.netlify/functions/hello",
-                params: JSON.stringify({
-                    blogId,
-                    blogType
-                }),
-                method: "GET"
-            })
+            let res;
+            if (blogId) {
+                res = await axios({
+                    url: "/.netlify/functions/hello",
+                    params: JSON.stringify({
+                        blogId,
+                    }),
+                    method: "GET"
+                })
+            } else {
+                res = await axios({
+                    url: "/.netlify/functions/hello",
+                    params: JSON.stringify({
+                        blogType
+                    }),
+                    method: "GET"
+                })
+            }
 
             console.log(res)
             return res.data
@@ -150,6 +163,26 @@ const Sidebar = () => {
     )
 }
 
+const Blog: FC<{ path: string }> = () => {
+    const param = useParams()
+    const [blog, setBlog] = useState({ id: 0, title: "", desc: "", type: "", image: "" })
+
+    console.log(param)
+
+    useEffect(() => {
+        blogService.findBlog(param.blogId, null).then(data => {
+            setBlog(data[0])
+        })
+    }, [blog])
+
+    return (
+        <Container>
+            <h1>{blog.title}</h1>
+            <p>{blog.desc}</p>
+        </Container>
+    )
+}
+
 const Page: FC<{ path: string }> = () => {
 
     const location = useLocation()
@@ -184,18 +217,24 @@ const Page: FC<{ path: string }> = () => {
             })
             return
         }
-    }, [])
+    }, [location])
 
     return (
         <Grid sx={{ padding: "0.5rem" }} container direction="row" spacing={4} justifyContent="center">
             {blogs.map(blog => (
                 <Grid item sx={{ flexShrink: 0, flexGrow: 1 }}>
-                    <BlogCard {...blog} />
+                    <Link style={{ textDecoration: "none" }} to={`/blog/${blog.id}`}>
+                        <BlogCard {...blog} />
+                    </Link>
                 </Grid>
             ))}
         </Grid>
     )
 }
+
+const Tech: FC<{ path: string }> = () => <div>Tech</div>
+const Community: FC<{ path: string }> = () => <div>Community</div>
+const Entertainment: FC<{ path: string }> = () => <div>Entertainment</div>
 
 interface HomeProps {
     path?: string
@@ -205,19 +244,25 @@ const Home: FC<HomeProps> = () => {
     return (
         <>
             <Container sx={{ padding: "3rem 1rem" }}>
-                <h1 style={{ textAlign: "center" }}>Belog</h1>
+                <Link style={{ color: "#000", textDecoration: "none" }} to="/">
+                    <h1 style={{ textAlign: "center" }}>Belog</h1>
+                </Link>
                 <Grid container direction="row" spacing={1} justifyContent="center">
                     {blogTypes.map(blogType => (
                         <Grid item>
-                            <BlogLink to="/">{blogType.type}</BlogLink>
+                            <BlogLink to={`/${blogType.url}`}>{blogType.type}</BlogLink>
                         </Grid>
                     ))}
                 </Grid>
             </Container>
             <Router>
+                <Blog path="/blog/:blogId" />
                 {blogTypes.map((blogType) => (
                     <Page path={`/${blogType.url}`} />
                 ))}
+                {/* <Tech path="tech" />
+                <Community path="/community" />
+                <Entertainment path="/entertainment" /> */}
                 <Page path="/" />
             </Router>
             {/* <Sidebar /> */}
