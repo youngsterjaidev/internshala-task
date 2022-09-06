@@ -6,7 +6,7 @@ const blogMem = [
     {
         id: 1,
         title: "Lizard",
-        type: 'Tech',
+        type: 'tech',
         desc: 'Kuch bhi',
         image: "https://web-dev.imgix.net/image/Dyx9FwYgMyNqy1kMGx8Orz6q0qC3/xyyPgtSNjfzhcOGPn5lG.jpg",
     },
@@ -14,13 +14,13 @@ const blogMem = [
         id: 2,
         title: "Entertainment",
         desc: 'Tech',
-        type: 'Entertainment',
+        type: 'entertainment',
         image: "https://web-dev.imgix.net/image/Dyx9FwYgMyNqy1kMGx8Orz6q0qC3/xyyPgtSNjfzhcOGPn5lG.jpg",
     },
     {
         id: 3,
         title: "Community",
-        type: 'Community',
+        type: 'community',
         desc: 'Entertainment',
         image: "https://web-dev.imgix.net/image/Dyx9FwYgMyNqy1kMGx8Orz6q0qC3/xyyPgtSNjfzhcOGPn5lG.jpg",
     }
