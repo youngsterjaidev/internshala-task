@@ -1,6 +1,6 @@
 import React, { FC, useState, useEffect } from "react"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
-import { Link, Router } from "@reach/router"
+import { Link, Router, useLocation } from "@reach/router"
 import { Container } from "@mui/system"
 import { CardHeader, Drawer, Grid, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material"
 import axios from "axios"
@@ -12,7 +12,17 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import styled from "styled-components"
 
-const blogTypes = ['Tech', 'Entertainment', 'Community']
+const blogTypes = [
+    {
+        url: 'tech',
+        type: 'Tech'
+    }, {
+        url: 'entertainment',
+        type: 'Entertainment'
+    }, {
+        url: 'community',
+        type: 'Community'
+    }]
 
 const BlogLink = styled(Link)`
     color: #000;
@@ -50,6 +60,22 @@ const blogService = {
             return res.data
         } catch (e) {
             console.log("Error occured while adding the blog addBlog fn : ", e)
+        }
+    },
+    findBlog: async () => {
+        try {
+            const res = await axios({
+                url: "/.netlify/functions/hello",
+                params: JSON.stringify({
+                    blogId: undefined,
+                    blogType: 'tech'
+                }),
+                method: "GET"
+            })
+
+            console.log(res)
+        } catch (e) {
+            console.log("Error occured while find the blog findBlog fn : ", e)
         }
     }
 }
@@ -111,7 +137,7 @@ const Sidebar = () => {
                 anchor="top"
             >
                 {blogTypes.map((blogType) => (
-                    <ListItem key={blogType} disablePadding>
+                    <ListItem key={blogType.type} disablePadding>
                         <ListItemButton>
                             <ListItemText primary={blogType} />
                         </ListItemButton>
@@ -123,19 +149,46 @@ const Sidebar = () => {
     )
 }
 
+const Page: FC<{ path: string }> = () => {
+
+    const location = useLocation()
+    const [blogs, setBlogs] = useState([])
+
+    useEffect(() => {
+        console.log(location)
+        if (location.pathname === "/tech") {
+            blogService.findBlog()
+            setBlogs([])
+            return
+        }
+
+        if (location.pathname === "/entertainment") {
+            setBlogs([])
+            return
+        }
+
+        if (location.pathname === "/community") {
+            setBlogs([])
+            return
+        }
+    }, [])
+
+    return (
+        <Grid sx={{ padding: "0.5rem" }} container direction="row" spacing={4} justifyContent="center">
+            {blogs.map(blog => (
+                <Grid item sx={{ flexShrink: 0, flexGrow: 1 }}>
+                    <BlogCard {...blog} />
+                </Grid>
+            ))}
+        </Grid>
+    )
+}
+
 interface HomeProps {
     path?: string
 }
 
 const Home: FC<HomeProps> = () => {
-    const [blogs, setBlogs] = useState([])
-
-    useEffect(() => {
-        blogService.fetchBlogs().then(data => {
-            setBlogs(data)
-        })
-    }, [])
-
     return (
         <>
             <Container sx={{ padding: "3rem 1rem" }}>
@@ -143,18 +196,17 @@ const Home: FC<HomeProps> = () => {
                 <Grid container direction="row" spacing={1} justifyContent="center">
                     {blogTypes.map(blogType => (
                         <Grid item>
-                            <BlogLink to="/">{blogType}</BlogLink>
+                            <BlogLink to="/">{blogType.type}</BlogLink>
                         </Grid>
                     ))}
                 </Grid>
             </Container>
-            <Grid sx={{ padding: "0.5rem" }} container direction="row" spacing={4} justifyContent="center">
-                {blogs.map(blog => (
-                    <Grid item sx={{ flexShrink: 0, flexGrow: 1 }}>
-                        <BlogCard {...blog} />
-                    </Grid>
+            <Router>
+                {blogTypes.map((blogType) => (
+                    <Page path={`/${blogType.url}`} />
                 ))}
-            </Grid>
+                <Page path="/" />
+            </Router>
             {/* <Sidebar /> */}
         </>
     )
@@ -163,7 +215,7 @@ const Home: FC<HomeProps> = () => {
 const Main = () => {
     return (
         <Router>
-            <Home path="/" />
+            <Home path="/*" />
         </Router>
     )
 }
