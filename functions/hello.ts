@@ -1,25 +1,42 @@
 import { Handler } from "@netlify/functions";
 
-let id = 0
+let id = 3
 
 const blogMem = [
     {
-        id: 0,
+        id: 1,
         title: "Lizard",
         type: 'Tech',
         desc: 'Kuch bhi',
+        image: "https://web-dev.imgix.net/image/Dyx9FwYgMyNqy1kMGx8Orz6q0qC3/xyyPgtSNjfzhcOGPn5lG.jpg",
+    },
+    {
+        id: 2,
+        title: "Entertainment",
+        desc: 'Tech',
+        type: 'Entertainment',
+        image: "https://web-dev.imgix.net/image/Dyx9FwYgMyNqy1kMGx8Orz6q0qC3/xyyPgtSNjfzhcOGPn5lG.jpg",
+    },
+    {
+        id: 3,
+        title: "Community",
+        type: 'Community',
+        desc: 'Entertainment',
         image: "https://web-dev.imgix.net/image/Dyx9FwYgMyNqy1kMGx8Orz6q0qC3/xyyPgtSNjfzhcOGPn5lG.jpg",
     }
 ]
 
 const filterElement = (key: string | number, value: string) => {
-    console.log(blogMem.filter(item => item[key] === value))
+    return blogMem.filter(item => item[key] === value)
 }
 
 
 const handler: Handler = async (event, context) => {
 
-    if (event.queryStringParameters) {
+    console.log(event)
+
+    if (Object.keys(event.queryStringParameters).length !== 0) {
+        console.log("Not Allowed route")
         let param = event.queryStringParameters['0']
         const { blogId, blogType } = JSON.parse(param)
 
@@ -31,18 +48,18 @@ const handler: Handler = async (event, context) => {
         }
 
         if (blogId) {
-            filterElement("id", blogId)
+            let result = filterElement("id", blogId)
             return {
                 statusCode: 200,
-                body: JSON.stringify({ message: blogId })
+                body: JSON.stringify(result)
             }
         }
 
         if (blogType) {
-            filterElement("type", blogType)
+            let result = filterElement("type", blogType)
             return {
                 statusCode: 200,
-                body: JSON.stringify({ message: blogType })
+                body: JSON.stringify(result)
             }
         }
 
@@ -75,6 +92,8 @@ const handler: Handler = async (event, context) => {
             body: JSON.stringify(blogMem)
         }
     }
+
+    console.log(blogMem)
 
     return {
         statusCode: 200,

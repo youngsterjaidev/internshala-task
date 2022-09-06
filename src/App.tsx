@@ -62,18 +62,19 @@ const blogService = {
             console.log("Error occured while adding the blog addBlog fn : ", e)
         }
     },
-    findBlog: async () => {
+    findBlog: async (blogId: number | null, blogType: string) => {
         try {
             const res = await axios({
                 url: "/.netlify/functions/hello",
                 params: JSON.stringify({
-                    blogId: undefined,
-                    blogType: 'tech'
+                    blogId,
+                    blogType
                 }),
                 method: "GET"
             })
 
             console.log(res)
+            return res.data
         } catch (e) {
             console.log("Error occured while find the blog findBlog fn : ", e)
         }
@@ -157,18 +158,30 @@ const Page: FC<{ path: string }> = () => {
     useEffect(() => {
         console.log(location)
         if (location.pathname === "/tech") {
-            blogService.findBlog()
-            setBlogs([])
+            blogService.findBlog(null, "Tech").then(data => {
+                setBlogs(data)
+            })
             return
         }
 
         if (location.pathname === "/entertainment") {
-            setBlogs([])
+            blogService.findBlog(null, "Entertainment").then(data => {
+                setBlogs(data)
+            })
             return
         }
 
         if (location.pathname === "/community") {
-            setBlogs([])
+            blogService.findBlog(null, "Community").then(data => {
+                setBlogs(data)
+            })
+            return
+        }
+
+        if (location.pathname === "/") {
+            blogService.fetchBlogs().then(data => {
+                setBlogs(data)
+            })
             return
         }
     }, [])
