@@ -6,9 +6,9 @@ let id = 3
 const blogMem = [
     {
         id: 1,
-        title: "Lizard",
+        title: "is it :modal",
         type: 'tech',
-        desc: 'Kuch bhi',
+        desc: "CSS :modal is available from Chrome 105.",
         image: "https://web-dev.imgix.net/image/Dyx9FwYgMyNqy1kMGx8Orz6q0qC3/xyyPgtSNjfzhcOGPn5lG.jpg",
     },
     {
@@ -16,14 +16,14 @@ const blogMem = [
         title: "Entertainment",
         desc: 'Tech',
         type: 'entertainment',
-        image: "https://web-dev.imgix.net/image/Dyx9FwYgMyNqy1kMGx8Orz6q0qC3/xyyPgtSNjfzhcOGPn5lG.jpg",
+        image: "https://web-dev.imgix.net/image/kheDArv5csY6rvQUJDbWRscckLr1/S1QCCeuPNPnSGPMLqOgn.JPG",
     },
     {
         id: 3,
         title: "Community",
         type: 'community',
         desc: 'Entertainment',
-        image: "https://web-dev.imgix.net/image/Dyx9FwYgMyNqy1kMGx8Orz6q0qC3/xyyPgtSNjfzhcOGPn5lG.jpg",
+        image: "https://web-dev.imgix.net/image/kheDArv5csY6rvQUJDbWRscckLr1/iuFKGqZPtsuMKZSAPwMw.jpg",
     }
 ]
 

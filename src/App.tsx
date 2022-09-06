@@ -1,12 +1,9 @@
 import React, { FC, useState, useEffect } from "react"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { Link, Router, useLocation, useParams } from "@reach/router"
-import { Container } from "@mui/system"
+import { Container, height } from "@mui/system"
 import { CardHeader, Drawer, Grid, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material"
 import axios from "axios"
-import Box from '@mui/material/Box';
-import SpeedDial from '@mui/material/SpeedDial';
-import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -28,16 +25,18 @@ const blogTypes = [
     }]
 
 const BlogLink = styled(Link)`
-    color: #000;
+    color: hsla(0, 0%, 35%, 1);
     padding: 0.5em 1em;
     text-decoration: none;
     font-weight: 600;
-    border: 2px solid #ddd;
-    border-radius: 1em;
+    border: 2px solid hsla(0, 0%, 35%, 1);
+    border-radius: 0.3em;
+    transition: background 0.1s ease-in;
 
     &:hover {
-        background: #ddd;
+        background: #000;
         color: #fff;
+        border: 2px solid #000;
     }
 `
 
@@ -94,15 +93,6 @@ const blogService = {
     }
 }
 
-const Navbar = () => {
-    return (
-        <nav>
-            <div>Belog</div>
-            <div></div>
-        </nav>
-    )
-}
-
 interface BlogProps {
     id?: number,
     image: string,
@@ -116,7 +106,7 @@ const BlogCard: FC<BlogProps> = ({ image, title, desc }) => {
             <CardMedia
                 component="img"
                 alt="green iguana"
-                height="140"
+                height="200px"
                 image={image}
             />
             <CardContent>
@@ -128,39 +118,10 @@ const BlogCard: FC<BlogProps> = ({ image, title, desc }) => {
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button size="small">Share</Button>
                 <Button size="small">Learn More</Button>
             </CardActions>
         </Card>
     );
-}
-
-const Sidebar = () => {
-    return (
-        <Container sx={{ display: "flex", justifyContent: "center" }}>
-            <Drawer
-                sx={{
-                    width: 240,
-                    flexShrink: 0,
-                    '& .MuiDrawer-paper': {
-                        width: 240,
-                        boxSizing: "border-box"
-                    }
-                }}
-                variant="permanent"
-                anchor="top"
-            >
-                {blogTypes.map((blogType) => (
-                    <ListItem key={blogType.type} disablePadding>
-                        <ListItemButton>
-                            <ListItemText primary={blogType} />
-                        </ListItemButton>
-                    </ListItem>
-                ))}
-            </Drawer>
-
-        </Container>
-    )
 }
 
 const Blog: FC<{ path: string }> = () => {
@@ -177,8 +138,15 @@ const Blog: FC<{ path: string }> = () => {
 
     return (
         <Container>
+            <div style={{
+                background: `url("${blog.image}") no-repeat`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                height: "50vh",
+                width: "100%"
+            }}></div>
             <h1>{blog.title}</h1>
-            <p>{blog.desc}</p>
+            <p style={{ lineHeight: "1.6em"}}>{blog.desc}</p>
         </Container>
     )
 }
@@ -234,10 +202,6 @@ const Page: FC<{ path: string }> = () => {
     )
 }
 
-const Tech: FC<{ path: string }> = () => <div>Tech</div>
-const Community: FC<{ path: string }> = () => <div>Community</div>
-const Entertainment: FC<{ path: string }> = () => <div>Entertainment</div>
-
 interface HomeProps {
     path?: string
 }
@@ -262,9 +226,6 @@ const Home: FC<HomeProps> = () => {
                 {blogTypes.map((blogType) => (
                     <Page path={`/${blogType.url}`} />
                 ))}
-                {/* <Tech path="tech" />
-                <Community path="/community" />
-                <Entertainment path="/entertainment" /> */}
                 <Page path="/" />
             </Router>
             {/* <Sidebar /> */}
@@ -274,9 +235,7 @@ const Home: FC<HomeProps> = () => {
 
 const Main = () => {
     return (
-        <Router>
-            <Home path="/*" />
-        </Router>
+            <Home />
     )
 }
 
