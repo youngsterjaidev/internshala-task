@@ -173,7 +173,7 @@ const Blog: FC<{ path: string }> = () => {
         blogService.findBlog(param.blogId, null).then(data => {
             setBlog(data[0])
         })
-    }, [blog])
+    }, [])
 
     return (
         <Container>
@@ -191,21 +191,21 @@ const Page: FC<{ path: string }> = () => {
     useEffect(() => {
         console.log(location)
         if (location.pathname === "/tech") {
-            blogService.findBlog(null, "Tech").then(data => {
+            blogService.findBlog(null, "tech").then(data => {
                 setBlogs(data)
             })
             return
         }
 
         if (location.pathname === "/entertainment") {
-            blogService.findBlog(null, "Entertainment").then(data => {
+            blogService.findBlog(null, "entertainment").then(data => {
                 setBlogs(data)
             })
             return
         }
 
         if (location.pathname === "/community") {
-            blogService.findBlog(null, "Community").then(data => {
+            blogService.findBlog(null, "community").then(data => {
                 setBlogs(data)
             })
             return

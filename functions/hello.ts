@@ -1,4 +1,5 @@
 import { Handler } from "@netlify/functions";
+import { IUtilString } from "fabric/fabric-impl";
 
 let id = 3
 
@@ -27,7 +28,12 @@ const blogMem = [
 ]
 
 const filterElement = (key: string | number, value: string) => {
-    return blogMem.filter(item => item[key] === +value)
+    if(key === 'id') {
+        return blogMem.filter(item => item[key] === +value)
+    } else {
+        console.log("value : ", +value)
+        return blogMem.filter(item => item[key] === value)
+    }  
 }
 
 
@@ -58,7 +64,9 @@ const handler: Handler = async (event, context) => {
         }
 
         if (blogType) {
+            console.log(blogType)
             let result = filterElement("type", blogType)
+            console.log(result)
             return {
                 statusCode: 200,
                 body: JSON.stringify(result)
