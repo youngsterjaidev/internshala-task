@@ -35,10 +35,10 @@ export const Home: FC<Props> = () => {
         // canvas.freeDrawingBrush = new fabric.Circle(canvas)
     }, [])
 
-    // if (!token) {
-    //     navigate("/login")
-    //     return null
-    // }
+    if (!token) {
+        navigate("/login")
+        return null
+    }
 
     return (
         <div>
