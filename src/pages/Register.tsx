@@ -13,7 +13,9 @@ const Container = styled.div`
 
 const Form = styled.form`
     text-align: center;
-    padding: 2.5rem 1rem;
+    padding: 4rem 2rem;
+    background: #fff;
+    border-radius: 0.5rem;
     box-shadow: 0px 0px 20px 8px #00000026;
 
 
@@ -21,13 +23,21 @@ const Form = styled.form`
         padding: 0.4em 0em;
     }
 `
+const Legend = styled.legend`
+    font-weight: bold;
+    margin-bottom: 1em;
+`
 
 const LoginButton = styled(Button)`
     display: block;
     width: 100%;
+    font-family: 'Oswald', sans-serif;
 `
 
-const MyLink = styled(Link)``
+const MyLink = styled(Link)`
+    text-decoration: none;
+    color: #000;
+`
 
 interface Props {
     path?: string
@@ -75,7 +85,7 @@ export const Register: FC<Props> = () => {
         <>
             <Container>
                 <Form onSubmit={handleSubmit}>
-                    <legend>Welcome back !</legend>
+                    <Legend>Welcome back !</Legend>
                     <div>
                         <Input type="text" placeholder="username" onChange={handleUsername} />
                     </div>
@@ -86,10 +96,10 @@ export const Register: FC<Props> = () => {
                         <Input type="password" placeholder="password" onChange={handlePassword} />
                     </div>
                     <div>
-                        <LoginButton type="submit" primary>Login</LoginButton>
+                        <LoginButton type="submit" primary>Sign Up</LoginButton>
                     </div>
                     <div>
-                        <MyLink to="/register">New user</MyLink>
+                        <MyLink to="/login">Already a user ?</MyLink>
                     </div>
                 </Form>
             </Container>
