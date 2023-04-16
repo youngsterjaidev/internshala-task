@@ -1,0 +1,246 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Raleway:ital,wght@0,400;0,500;0,700;0,800;1,400;1,500;1,700&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+* {
+    --brand-hue: 245;
+    --brand-saturation: 80%;
+    --brand-lightness: 67%;
+    --brand-light: hsl(var(--brand-hue) var(--brand-saturation) var(--brand-lightness));
+    --text1-light: hsl(var(--brand-hue) var(--brand-saturation) 30%);
+    --text2-light: hsl(var(--brand-hue) 30% 30%);
+    --brand-font: 'Poppins', sans-serif;
+}
+
+[type="button"] {
+    background-color: var(--brand-light);
+    border: 2px solid;
+    color: #fff;
+    letter-spacing: 0.075em;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-family: var(--brand-font);
+    font-weight: 500;
+    font-size: 1rem;
+    padding: 1rem 2rem;
+    cursor: pointer;
+    position: relative;
+}
+
+[type="button"]:hover {
+    color: #ffffff;
+    background-color: #151515;
+    border-color: #151515;
+    transition: background .1s .2s, border-color .4s 0s, color .2s 0s;
+}
+
+[type="button"]:hover::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #151515;
+    color: #fff;
+    opacity: 0;
+    transform: scale3d(0.7, 1, 1);
+    transition: transform 2s, opacity 1s;
+}
+
+
+[type="button"]:hover::after {
+    /* NOTE: complete later */
+    opacity: 1;
+}
+
+img {
+    width: 100%;
+}
+
+nav {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: red;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+nav a {
+    display: block;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+nav>ul a {
+    cursor: pointer;
+    padding: 0.5rem;
+    margin: 0rem 1.5rem;
+    line-height: 1.2;
+    font-weight: 500;
+    letter-spacing: 0;
+    transition: all .2s ease;
+}
+
+nav>ul a:hover {
+    color: var(--brand-light);
+    transition: 0.2s;
+    position: relative;
+}
+
+nav>ul a:hover::before {
+    position: absolute;
+    content: '';
+    bottom: 0px;
+    left: 0;
+    height: 3px;
+    width: 100%;
+    background: #756aee;
+    opacity: 1;
+}
+
+h1 {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 3rem;
+    text-align: center;
+}
+
+section {
+    min-height: 100vh;
+}
+
+section:nth-of-type(1) {}
+
+section:nth-of-type(1)>div:nth-of-type(1) {
+    min-height: 100vh;
+    background: url("https://ld-wt73.template-help.com/wt_prod-18959/images/slider-1-slide-1-1770x742.jpg") no-repeat center;
+    display: grid;
+    place-items: center;
+}
+
+section:nth-of-type(1)>div:nth-of-type(1) p,
+h1,
+div {
+    text-align: center;
+}
+
+.active {
+    position: relative;
+}
+
+.active::before {
+    position: absolute;
+    content: '';
+    bottom: 0px;
+    left: 0;
+    height: 3px;
+    width: 100%;
+    background: #756aee;
+    opacity: 1;
+}
+
+section:nth-of-type(2) {
+    padding: 2rem;
+}
+
+
+section:nth-of-type(2)>div {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    gap: 2rem;
+}
+
+
+section:nth-of-type(2)>div>div {
+    flex: 1;
+    padding: 2rem;
+}
+
+section:nth-of-type(2)>div>div:nth-of-type(2) {
+    display: grid;
+    grid-template-columns: repeat(auto-fit minmax(200px, 1fr));
+    grid-auto-rows: minmax(200px, 1fr);
+}
+
+section:nth-of-type(3) {
+    padding: 1rem;
+}
+
+
+section:nth-of-type(3) ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+
+section:nth-of-type(3) li {
+    border-right: 1px solid black;
+    padding: 0.5rem 1.5rem;
+    cursor: pointer;
+    line-height: 1;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+
+section:nth-of-type(3) li:nth-of-type(5) {
+    border: none;
+
+}
+
+
+section:nth-of-type(3)>div>div {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+    grid-auto-rows: minmax(350px, 1fr);
+    grid-gap: 4ch;
+}
+
+
+section:nth-of-type(3)>div>div>div {
+    background-color: #ddd;
+    width: 100%;
+}
+
+@media screen and (max-width: 500px) {
+    nav ul {
+        display: none;
+        padding: 0.2rem 0.5rem;
+    }
+
+    nav img {
+        max-width: 120px;
+        max-height: 58px;
+        width: auto;
+        height: auto;
+    }
+
+
+    section:nth-of-type(3)>div>div {
+        grid-template-columns: none;
+    }
+}
