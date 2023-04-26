@@ -37,7 +37,7 @@ const MyLink = styled.a`
   display: block;
   padding: 0.5rem 1rem;
   text-decoration: none;
-  color: black;
+  color: #fff;
   font-weight: bold;
   cursor: pointer;
   position: relative;
